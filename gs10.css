@@ -1,0 +1,36 @@
+#gs10map { height: 420px;}
+body {
+    background-image: url('./bg-gs10.jpg');
+    background-attachement: local;
+    background-size: cover;
+}
+
+section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: hsla(246, 51%, 19.2%, 0.6);
+    color: white;
+    font-size: 120%
+}
+
+main > section  {
+    margin-top: 20px;
+}
+
+nav.nav {
+    position: fixed;
+    background-color: hsla(300, 36.8%, 22.9%, 1);
+    width: 100%;
+}
+
+input:invalid {
+    color: red;
+    border-color: red;
+}
+
+#formContainer { overflow: auto; }
+h1 {
+    color: white;
+}
