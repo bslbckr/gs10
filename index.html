@@ -33,26 +33,66 @@
 
              var xhr = new XMLHttpRequest();
              xhr.open("POST", "https://script.google.com/macros/s/AKfycbzZNfBDF0OtXRkym1J8w4vBf48zc-wYlbqXRYPnhM3zbnJ-xqE0xfL06Wh8iTeip_M3/exec");
-                                   xhr.onreadystatechange = function() {
-                          if (xhr.readyState === XMLHttpRequest.DONE) {
-                              if (xhr.status === 200) {
-                                  var responseObject = JSON.parse(xhr.responseText);
-                                  var formContainer = document.getElementById('formContainer');
-                                  if (responseObject.success) {
-                                      formContainer.innerHTML = "<div class='alert alert-success'><h3>Anmeldung erhalten!</h3></div>";
-                                  } else {
-                                      var div = document.createElement('div');
-                                      div.className = 'alert alert-warning';
-                                      div.innerHTML = '<strong>Oups</strong> das hat nicht geklappt. Captcha?';
-                                      
-                                      formContainer.insertAdjacentElement('beforeend',div);
-                                  }
-                              }
-                          }
-                      }
-                 xhr.send(data);
-                 grecaptcha.reset();
+             xhr.onreadystatechange = function() {
+                 if (xhr.readyState === XMLHttpRequest.DONE) {
+                     if (xhr.status === 200) {
+                         var responseObject = JSON.parse(xhr.responseText);
+                         var formContainer = document.getElementById('formContainer');
+                         if (responseObject.success) {
+                             formContainer.innerHTML = "<div class='alert alert-success'><h3>Anmeldung erhalten!</h3></div>";
+                         } else {
+                             var div = document.createElement('div');
+                             div.className = 'alert alert-warning';
+                             div.innerHTML = '<strong>Oups</strong> das hat nicht geklappt. Captcha?';
+                             
+                             formContainer.insertAdjacentElement('beforeend',div);
+                         }
+                     }
+                 }
+             }
+             xhr.send(data);
+             grecaptcha.reset();
          }
+
+         function loadTeams() {
+             var insertTable = function(teams) {
+                 var section = document.getElementById('teamsSection');
+                 if (teams && teams.length && teams.length > 0) {
+                     var leTable = document.createElement('table');
+                     leTable.className = 'table';
+                     var tableHeader = leTable.createTHead();
+                     ['Team','Stadt','bezahlt'].forEach(function(x) {
+                         var cell = document.createElement('td');
+                         cell.appendChild(document.createTextNode(x));
+                         tableHeader.appendChild(cell);
+                     });
+                     teams.forEach(function(team){
+                         var row = leTable.insertRow();
+                         row.insertCell().appendChild(document.createTextNode(team.team));
+                         row.insertCell().appendChild(document.createTextNode(team.city));
+                         var span = document.createElement('span');
+                         span.className= team.paid && team.paid === true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-unchecked';
+                         row.insertCell().appendChild(span);
+                     }
+                     );
+                     section.appendChild(leTable);
+                 } else {
+                     section.appendChild(document.createElement('p').appendChild(document.createTextNode('TBA')));
+                 }
+                 };
+                 fetch('https://script.google.com/macros/s/AKfycbzOaBQ7foVlyJLaF7J9QQIdP_vwkJzxDP_m3hFXHwmen5BR66eWspKSgKO665O3V0QF/exec',
+                       { method:'GET',
+                         redirect:'follow',
+                         cache:'no-cache',
+                         mode:'cors'
+                       }).then(function(resp) {
+                           if(resp.ok) {
+                               return resp.json();
+                           }
+                           return [];
+                           
+                       }).then(insertTable).catch(function(err){console.log(err);});
+             }
         </script>
         <link rel="stylesheet"  href="./gs10.css" />
         <title>Goldstrand 10 - 26./27. Mai 2018</title>
@@ -127,10 +167,9 @@
                     <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
                     <script type="text/javascript" >setupForm();</script>
                 </section>
-                <section>
+                <section id="teamsSection">
                     <a name="teams"></a>
                     <h2>Teams</h2>
-                    <p>TBA</p>
                 </section>
                 <section>
                     <a name="karte" ></a>
@@ -171,5 +210,6 @@
                 </section>
             </main>
         </div>
+        <script type="text/javascript">loadTeams();</script>
     </body>
 </html>
