@@ -4,6 +4,11 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary_large_image" >
+        <meta name="twitter:site" content="@ultitweet" >
+        <meta name="twitter:title" content="#goldstrand10 - 26./27. Mai 2018" >
+        <meta name="twitter:description" content="Goldstrand will be held at Karlshagen on the island of Usedom + Goldstrand's tenth anniversary + Registration is open until end of March 2018" >
+        <meta name="twitter:image" content="https://gs10.goldfingers-potsdam.de/bg-gs10.jpg" >
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
               integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
@@ -11,89 +16,6 @@
         <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
                 integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
                 crossorigin=""></script>
-        <script type="text/javascript" >
-         function setupForm() {
-             document.getElementById('submitButton').onclick = postIfValid;
-         }
-         
-         function postIfValid(event) {
-             event.preventDefault();
-             var formElement = document.querySelector('main > section > div#formContainer > form');
-             var isFormValid = formElement.checkValidity();
-             if (isFormValid) {
-                 grecaptcha.execute();
-             }
-         }
-         
-         function submitRegistration(token) {
-             var formElement = document.querySelector('main > section > div#formContainer > form');
-             
-             var data = new FormData(formElement);
-             data.append('token',token);
-
-             var xhr = new XMLHttpRequest();
-             xhr.open("POST", "https://script.google.com/macros/s/AKfycbzZNfBDF0OtXRkym1J8w4vBf48zc-wYlbqXRYPnhM3zbnJ-xqE0xfL06Wh8iTeip_M3/exec");
-             xhr.onreadystatechange = function() {
-                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                     if (xhr.status === 200) {
-                         var responseObject = JSON.parse(xhr.responseText);
-                         var formContainer = document.getElementById('formContainer');
-                         if (responseObject.success) {
-                             formContainer.innerHTML = "<div class='alert alert-success'><h3>Anmeldung erhalten!</h3></div>";
-                         } else {
-                             var div = document.createElement('div');
-                             div.className = 'alert alert-warning';
-                             div.innerHTML = '<strong>Oups</strong> das hat nicht geklappt. Captcha?';
-                             
-                             formContainer.insertAdjacentElement('beforeend',div);
-                         }
-                     }
-                 }
-             }
-             xhr.send(data);
-             grecaptcha.reset();
-         }
-
-         function loadTeams() {
-             var insertTable = function(teams) {
-                 var section = document.getElementById('teamsSection');
-                 if (teams && teams.length && teams.length > 0) {
-                     var leTable = document.createElement('table');
-                     leTable.className = 'table';
-                     var tableHeader = leTable.createTHead();
-                     ['Team','Stadt','bezahlt'].forEach(function(x) {
-                         var cell = document.createElement('td');
-                         cell.appendChild(document.createTextNode(x));
-                         tableHeader.appendChild(cell);
-                     });
-                     teams.forEach(function(team){
-                         var row = leTable.insertRow();
-                         row.insertCell().appendChild(document.createTextNode(team.team));
-                         row.insertCell().appendChild(document.createTextNode(team.city));
-                         var span = document.createElement('span');
-                         span.className= team.paid && team.paid === true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-unchecked';
-                         row.insertCell().appendChild(span);
-                     }
-                     );
-                     section.appendChild(leTable);
-                 } else {
-                     section.appendChild(document.createElement('p').appendChild(document.createTextNode('TBA')));
-                 }
-                 };
-                 fetch('https://script.google.com/macros/s/AKfycbzOaBQ7foVlyJLaF7J9QQIdP_vwkJzxDP_m3hFXHwmen5BR66eWspKSgKO665O3V0QF/exec',
-                       { method:'GET',
-                         redirect:'follow',
-                         cache:'no-cache',
-                         mode:'cors'
-                       }).then(function(resp) {
-                           if(resp.ok) {
-                               return resp.json();
-                           }
-                           return [];
-                           
-                       }).then(insertTable).catch(function(err){console.log(err);});
-             }
-        </script>
         <link rel="stylesheet"  href="./gs10.css" />
         <title>Goldstrand 10 - 26./27. Mai 2018</title>
     </head>
@@ -165,7 +87,6 @@
                         </form>
                     </div>
                     <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
-                    <script type="text/javascript" >setupForm();</script>
                 </section>
                 <section id="teamsSection">
                     <a name="teams"></a>
@@ -174,32 +95,6 @@
                 <section>
                     <a name="karte" ></a>
                     <div id="gs10map" ></div>
-                    <script type="text/javascript" >
-                     var gs10Map = L.map('gs10map').setView([54.11,13.85],16);
-                     var OpenTopoMap = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-	                 maxZoom: 19,
-	                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
-                     }).addTo(gs10Map);
-                     var gucArea = L.polygon([
-                         [54.114560959934, 13.8492461441],
-                         [54.1148219478,13.849822819038],
-                         [54.11460183766, 13.850099086567],
-                         [54.114507504386, 13.849704801842],
-                         [54.114578254362, 13.849584102436],
-                         [54.114485493257, 13.849366843506]
-                     ]).bindPopup('Frühstück, Infos und get-together'),
-                         tentArea = L.polygon([
-                             [ 54.11495086891,13.850415587231],
-                             [ 54.115298325029,13.85126048307],
-                             [ 54.114620704289,13.851976632877],
-                             [ 54.114211925402,13.850895702645],
-                             [ 54.114546809943,13.850474595829],
-                             [ 54.114862825268,13.850085675522]
-                         ]).bindPopup('Zelte'),
-                         showers = L.marker([54.113779558727,13.85050678234]).bindPopup('Duschen &amp; Toiletten');
-                     var camping = L.layerGroup([gucArea,tentArea,showers]);
-                     L.control.layers({"Basemap":OpenTopoMap}, {"Campingplatz":camping}).addTo(gs10Map);
-                    </script>
                 </section>
                 <section>
                     <h2>Contact</h2>
@@ -210,6 +105,6 @@
                 </section>
             </main>
         </div>
-        <script type="text/javascript">loadTeams();</script>
+        <script src="gs10.js"></script>
     </body>
 </html>
