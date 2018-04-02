@@ -37,33 +37,57 @@
         grecaptcha.reset();
     };
 
+
+    
     function loadTeams() {
-        var insertTable = function(teams) {
+        function createTeamListTable() {
+            var leTable = document.createElement('table');
+            leTable.className = 'table';
+            var tableHeader = leTable.createTHead();
+            ['Team','City','paid'].forEach(function(x) {
+                var cell = document.createElement('td');
+                cell.appendChild(document.createTextNode(x));
+                tableHeader.appendChild(cell);
+            });
+            return leTable;
+        }
+
+        function insertTeamRow(table, team) {
+            var row = table.insertRow();
+            row.insertCell().appendChild(document.createTextNode(team.team));
+            row.insertCell().appendChild(document.createTextNode(team.city));
+            var span = document.createElement('span');
+            span.className= team.paid && team.paid === true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-unchecked';
+            row.insertCell().appendChild(span);
+        }
+
+        function insertTable(teams) {
             var section = document.getElementById('teamsSection');
             if (teams && teams.length && teams.length > 0) {
-                var leTable = document.createElement('table');
-                leTable.className = 'table';
-                var tableHeader = leTable.createTHead();
-                ['Team','Stadt','bezahlt'].forEach(function(x) {
-                    var cell = document.createElement('td');
-                    cell.appendChild(document.createTextNode(x));
-                    tableHeader.appendChild(cell);
-                });
-                teams.forEach(function(team){
-                    var row = leTable.insertRow();
-                    row.insertCell().appendChild(document.createTextNode(team.team));
-                    row.insertCell().appendChild(document.createTextNode(team.city));
-                    var span = document.createElement('span');
-                    span.className= team.paid && team.paid === true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-unchecked';
-                    row.insertCell().appendChild(span);
-                }
-                             );
+                var leTable = createTeamListTable();
+                var insertIntoTeamTable = function(team) { insertTeamRow(leTable,team);};
+                teams.filter(function(team) {return team.safeSpot === true;})
+                    .forEach(insertIntoTeamTable);
+
                 section.appendChild(leTable);
+
+                var waitingListHeader = document.createElement('h3');
+                waitingListHeader.appendChild(document.createTextNode('Waiting list'));
+                section.appendChild(waitingListHeader);
+                var waitingListTable = createTeamListTable();
+                var insertIntoWaitingListTable = function(team) {
+                    insertTeamRow(waitingListTable,team);
+                };
+
+                teams.filter(function(team) { return team.waitingList === true;}).forEach(insertIntoWaitingListTable);
+
+                section.appendChild(waitingListTable);
             } else {
                 section.appendChild(document.createElement('p').appendChild(document.createTextNode('TBA')));
             }
         };
-        fetch('https://script.google.com/macros/s/AKfycbzOaBQ7foVlyJLaF7J9QQIdP_vwkJzxDP_m3hFXHwmen5BR66eWspKSgKO665O3V0QF/exec',
+        
+        fetch('https://script.google.com/macros/s/AKfycbxNvz75wKpucxz2cV-znuX1KVBR7cta8XaGuqlgtwNLN7rpAlvKrJTcVI8bBnZrvhja/exec',
               { method:'GET',
                 redirect:'follow',
                 cache:'no-cache',
