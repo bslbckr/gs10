@@ -106,7 +106,6 @@
         
     }
 
-    document.getElementById('submitButton').onclick = postIfValid;
     setupMap();
     loadTeams();
 })();
