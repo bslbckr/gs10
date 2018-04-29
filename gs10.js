@@ -124,9 +124,21 @@
                 [ 54.114546809943,13.850474595829],
                 [ 54.114862825268,13.850085675522]
             ]).bindPopup('Zelte'),
-            showers = L.marker([54.113779558727,13.85050678234]).bindPopup('Duschen &amp; Toiletten');
-        var camping = L.layerGroup([gucArea,tentArea,showers]);
-        L.control.layers({"Basemap":OpenTopoMap}, {"Campingplatz":camping}).addTo(gs10Map);
+            showers = L.marker([54.113779558727,13.85050678234]).bindPopup('Duschen &amp; Toiletten'),
+            camping = L.layerGroup([gucArea,tentArea,showers]),
+            restaurants = [
+                L.marker([54.1087076, 13.8124034]).bindPopup('Veermaster - Am Hafen 2, 17449 Karlshagen - +49 (0)38371 21012 - http://www.restaurant-veermaster.de/'),
+                L.marker([54.1204792, 13.8378140]).bindPopup('Nordlicht - Strandstra&szlig;e 28, 17449 Karlshagen'),
+                L.marker([54.1175996, 13.8371846]).bindPopup('il Rustico - Stra&szlig;e des Friedens 11, 17449 Karlshagen'),
+                L.marker([54.1074463, 13.8091073]).bindPopup('Pier 10 - Am Hafen 10 - 17449 Karlshagen - +49 38371 252081 - http://pier10-karlshagen.de'),
+                L.marker([54.1210166, 13.8407565]).bindPopup('Meereslust - Strandpromenade, 17449 Karlshagen'),
+                L.marker([54.1212750, 13.8415745]).bindPopup('Ristorante - Strandpromenade 4, 17449 Karlshagen'),
+                L.marker([54.1213352, 13.8411736]).bindPopup('La Residenza - Strandpromenade 6, 17449 Karlshagen'),
+                L.marker([54.1178211,13.8307831]).bindPopup('Peenem&uuml;nder Ecke - Strandstra&szlig;e 1 A, 17449 Karlshagen'),
+                L.marker([54.1208546, 13.8420259]).bindPopup('Die Auster - Strandpromenade 1, 17449 Karlshagen - http://www.strandhotel-usedeom.de/de/restaurant/die-auster')
+            ],
+            restaurantLayer = L.layerGroup(restaurants);
+        L.control.layers({"Basemap":OpenTopoMap}, {"Campingplatz":camping, "Restaurants":restaurantLayer}).addTo(gs10Map);
         
     }
 
