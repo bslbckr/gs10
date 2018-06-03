@@ -1,7 +1,7 @@
 #gs10map { height: 420px;}
 body {
     background-image: url('./bg-gs10.jpg');
-    background-attachement: local;
+    background-attachement: fixed;
     background-size: cover;
 }
 
@@ -12,7 +12,8 @@ section {
     padding-right: 10px;
     background-color: hsla(246, 51%, 19.2%, 0.6);
     color: white;
-    font-size: 120%
+    font-size: 120%;
+    overflow: auto;
 }
 
 main > section  {
@@ -33,4 +34,17 @@ input:invalid {
 #formContainer { overflow: auto; }
 h1 {
     color: white;
+}
+
+.flexcontainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+.flexitem {
+    max-width: 350px;
+    overflow: hidden;
+    margin-top: 10px;
 }
