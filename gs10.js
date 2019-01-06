@@ -143,5 +143,5 @@
     }
 
     setupMap();
-    loadTeams();
+    // loadTeams();
 })();
