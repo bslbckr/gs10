@@ -5,6 +5,12 @@ body {
     background-size: cover;
 }
 
+section#header-gs11 {
+    background-image: url('./GS-spec-asses-resized.jpg');
+    height: 400px;
+    background-size: cover;
+}
+
 section {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -33,6 +39,9 @@ input:invalid {
 
 #formContainer { overflow: auto; }
 h1 {
+    color: white;
+}
+h1 small {
     color: white;
 }
 
