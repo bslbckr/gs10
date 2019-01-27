@@ -15,7 +15,7 @@
         data.append('token',token);
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://script.google.com/macros/s/AKfycbzZNfBDF0OtXRkym1J8w4vBf48zc-wYlbqXRYPnhM3zbnJ-xqE0xfL06Wh8iTeip_M3/exec");
+        xhr.open("POST", "https://script.google.com/macros/s/AKfycbxs5HCsgGylNam2LQ2wimVtKmqNXuAp2yiA0Yp4oiHcqFrs44Jv/exec");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
@@ -144,4 +144,5 @@
 
     setupMap();
     // loadTeams();
+    document.getElementById('submitButton').onclick = postIfValid;
 })();
