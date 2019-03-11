@@ -15,7 +15,7 @@
         data.append('token',token);
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://script.google.com/macros/s/AKfycbxs5HCsgGylNam2LQ2wimVtKmqNXuAp2yiA0Yp4oiHcqFrs44Jv/exec");
+        xhr.open("POST", "https://script.google.com/macros/s/AKfycbzDr3E5OqwHAyUlSl5Q3PQgVeX_cYugKT6t9ek2h9RjLonDVPKT2GDN-_S-N2BsfRlvkg/exec");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
@@ -65,7 +65,7 @@
             var section = document.getElementById('teamsSection');
             if (teams && teams.length && teams.length > 0) {
                 var leTable = createTeamListTable();
-                var insertIntoTeamTable = function(team) { insertTeamRow(leTable,team);};
+                var insertIntoTeamTable = insertTeamRow.bind(this, leTable);
                 teams.filter(function(team) {return team.safeSpot === true;})
                     .forEach(insertIntoTeamTable);
 
@@ -73,21 +73,25 @@
 
                 var waitingListHeader = document.createElement('h3');
                 waitingListHeader.appendChild(document.createTextNode('Waiting list'));
-                section.appendChild(waitingListHeader);
                 var waitingListTable = createTeamListTable();
+                var waitingListFilled = false;
                 var insertIntoWaitingListTable = function(team) {
                     insertTeamRow(waitingListTable,team);
+                    waitingListFilled = true;
                 };
 
                 teams.filter(function(team) { return team.waitingList === true;}).forEach(insertIntoWaitingListTable);
 
-                section.appendChild(waitingListTable);
+                if (waitingListFilled) {
+                    section.appendChild(waitingListHeader);
+                    section.appendChild(waitingListTable);
+                }
             } else {
                 section.appendChild(document.createElement('p').appendChild(document.createTextNode('TBA')));
             }
         };
         
-        fetch('https://script.google.com/macros/s/AKfycbxNvz75wKpucxz2cV-znuX1KVBR7cta8XaGuqlgtwNLN7rpAlvKrJTcVI8bBnZrvhja/exec',
+        fetch('https://script.google.com/macros/s/AKfycbzDr3E5OqwHAyUlSl5Q3PQgVeX_cYugKT6t9ek2h9RjLonDVPKT2GDN-_S-N2BsfRlvkg/exec',
               { method:'GET',
                 redirect:'follow',
                 cache:'no-cache',
@@ -143,6 +147,6 @@
     }
 
     setupMap();
-    // loadTeams();
+    loadTeams();
     document.getElementById('submitButton').onclick = postIfValid;
 })();
