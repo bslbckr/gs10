@@ -106,47 +106,5 @@
     }
 
 
-    function setupMap() {
-        var gs10Map = L.map('gs10map').setView([54.11,13.85],16);
-        var OpenTopoMap = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-	    maxZoom: 19,
-	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
-        }).addTo(gs10Map);
-        var gucArea = L.polygon([
-            [54.114560959934, 13.8492461441],
-            [54.1148219478,13.849822819038],
-            [54.11460183766, 13.850099086567],
-            [54.114507504386, 13.849704801842],
-            [54.114578254362, 13.849584102436],
-            [54.114485493257, 13.849366843506]
-        ]).bindPopup('Frühstück, Infos und get-together'),
-            tentArea = L.polygon([
-                [ 54.11495086891,13.850415587231],
-                [ 54.115298325029,13.85126048307],
-                [ 54.114620704289,13.851976632877],
-                [ 54.114211925402,13.850895702645],
-                [ 54.114546809943,13.850474595829],
-                [ 54.114862825268,13.850085675522]
-            ]).bindPopup('Zelte'),
-            showers = L.marker([54.113779558727,13.85050678234]).bindPopup('Duschen &amp; Toiletten'),
-            camping = L.layerGroup([gucArea,tentArea,showers]),
-            restaurants = [
-                L.marker([54.1087076, 13.8124034]).bindPopup('Veermaster - Am Hafen 2, 17449 Karlshagen - +49 (0)38371 21012 - http://www.restaurant-veermaster.de/'),
-                L.marker([54.1204792, 13.8378140]).bindPopup('Nordlicht - Strandstra&szlig;e 28, 17449 Karlshagen'),
-                L.marker([54.1175996, 13.8371846]).bindPopup('il Rustico - Stra&szlig;e des Friedens 11, 17449 Karlshagen'),
-                L.marker([54.1074463, 13.8091073]).bindPopup('Pier 10 - Am Hafen 10 - 17449 Karlshagen - +49 38371 252081 - http://pier10-karlshagen.de'),
-                L.marker([54.1210166, 13.8407565]).bindPopup('Meereslust - Strandpromenade, 17449 Karlshagen'),
-                L.marker([54.1212750, 13.8415745]).bindPopup('Ristorante - Strandpromenade 4, 17449 Karlshagen'),
-                L.marker([54.1213352, 13.8411736]).bindPopup('La Residenza - Strandpromenade 6, 17449 Karlshagen'),
-                L.marker([54.1178211,13.8307831]).bindPopup('Peenem&uuml;nder Ecke - Strandstra&szlig;e 1 A, 17449 Karlshagen'),
-                L.marker([54.1208546, 13.8420259]).bindPopup('Die Auster - Strandpromenade 1, 17449 Karlshagen - http://www.strandhotel-usedeom.de/de/restaurant/die-auster')
-            ],
-            restaurantLayer = L.layerGroup(restaurants);
-        L.control.layers({"Basemap":OpenTopoMap}, {"Campingplatz":camping, "Restaurants":restaurantLayer}).addTo(gs10Map);
-        
-    }
 
-    setupMap();
-    loadTeams();
-    document.getElementById('submitButton').onclick = postIfValid;
 })();
