@@ -12,10 +12,10 @@
         var formElement = document.querySelector('main > section > div#formContainer > form');
         
         var data = new FormData(formElement);
-        data.append('token',token);
+        data.append('g-recaptcha-response',token);
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://script.google.com/macros/s/AKfycbzDr3E5OqwHAyUlSl5Q3PQgVeX_cYugKT6t9ek2h9RjLonDVPKT2GDN-_S-N2BsfRlvkg/exec");
+        xhr.open("POST", "api/gs12/registration");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
@@ -105,6 +105,7 @@
               }).then(insertTable).catch(function(err){console.log(err);});
     }
 
-
+    var bttn = document.getElementById('submitButton');
+    bttn.addEventListener('click', postIfValid);
 
 })();

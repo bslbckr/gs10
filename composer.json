@@ -1,0 +1,31 @@
+{
+    "name": "guc/registrations",
+    "homepage": "https://gs12.goldfingers-potsdam.de",
+    "authors": [
+        {
+            "name": "Basil Becker",
+            "homepage": "https://github.com/bslbckr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "guc\\tournaments\\repositories\\": "src/repositories",
+            "guc\\tournaments\\model\\": "src/model",
+            "guc\\tournaments\\controller\\" : "src/controller",
+            "guc\\tournaments\\middleware\\" : "src/middleware"
+        }
+    },
+    "require": {
+        "slim/slim": "^4.4",
+        "slim/psr7": "^1.0",
+        "php-di/slim-bridge": "^3.0",
+        "google/recaptcha": "^1.2"
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public",
+        "test": "phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    }
+}

@@ -37,6 +37,47 @@
                 <section>
                     <h2>Registration</h2>
                     <p>Registration starts on 1st of February exclusively on this website and lasts till the end of March. Outstanding applications might get an early spot.</p>
+                    <div id="formContainer" >
+                        <form>
+                            <div class="form-group col-md-4 col-xs-12" >
+                                <label class="control-label" for="inputTeam" >Team</label>
+                                <input class="form-control" id="inputTeam" type="text" name="team" required >
+                            </div>
+                            <div class=" form-group col-md-4 col-xs-12" >
+                                <label class="control-label" for="inputStadt" >City</label>
+                                <input class="form-control"  id="inputStadt" type="text" name="city" required >
+                            </div>
+                            <div class="form-group col-md-4 col-xs-12" >
+                                <label class="control-label" for="inputMail" >E-Mail</label>
+                                <input class="form-control" id="inputMail" type="email" name="email"  required >
+                            </div>
+                            <div class="form-group col-md-4 col-xs-12" >
+                                <label class="control-label"  for="inputUrl" >Application link</label>
+                                <input class="form-control" type="url" name="applicationLink" id="inputUrl" >
+                            </div>
+                            <div class="form-group col-md-4 col-xs-12">
+                                <label class="control-label" for="inputStrength" >Level of play</label>
+                                <input class="form-control" type="number" name="strength" required min="1" max="10" placeholder="(1-10 1=bad 10=very strong)" >
+                            </div>
+                            <div class="form-group col-md-4 col-xs-12">
+                                <label class="control-label" for="inputContact" >Contact Person</label>
+                                <input class="form-control"  type="text" name="contactName" required id="inputContact" >
+                            </div>
+                            <div class="col-md-2 col-xs-12" >
+                                <button id="submitButton" class="btn btn-default" >Register</button>
+                                
+                            </div>
+                            <div class="g-recaptcha"
+                                 data-sitekey="6LdnS9MUAAAAAA24KmXCzDylc1ow2JPaxPyyHUu9"
+                                 data-callback="submitRegistration"
+                                 data-size="invisible"
+                                 id="recaptcha" >
+                                
+                            </div>
+                            
+                        </form>
+                        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+                    </div>
                 </section>
                 <section id="teamsSection" >
                     <h2>Teams</h2>
