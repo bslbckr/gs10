@@ -11,6 +11,15 @@ section#header-gs11 {
     background-size: cover;
 }
 
+section#header-gs11 > h2 {
+    font-size: 200px;
+    color: #c41a1a;
+    text-align: center;
+    transform: rotate(-8deg);
+}
+section#facts {
+    text-decoration: line-through;
+}
 section {
     padding-top: 20px;
     padding-bottom: 20px;
